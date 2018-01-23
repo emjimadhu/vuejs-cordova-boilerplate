@@ -5,9 +5,23 @@ import App from './App'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  components: { App },
-  template: '<App/>'
+const initApp = () => {
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    components: { App },
+    template: '<App/>'
+  })
+}
+
+// Initializing app after the deviceready event is triggered.
+document.addEventListener('deviceready', () => {
+  // initializing app...
+  initApp()
 })
+
+// If we are not in Cordova, manually trigger the deviceready event
+const isCordovaApp = (typeof window.cordova !== 'undefined')
+if (!isCordovaApp) {
+  document.dispatchEvent(new CustomEvent('deviceready', {}))
+}
